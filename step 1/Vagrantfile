@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  
+  # Prima VM
+  # Rocky Linux 9 VM Setup
+  config.vm.define "vm" do |vm|
+    config.vm.box = "generic/rocky9"
+    config.vm.box_version = "4.3.12"
+    config.vm.hostname = "vm-rocky9"
+    # Impostazioni di rete e assegnazione IP
+    config.vm.network "private_network", ip: "192.168.168.45"
+
+    # Risorse VM
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = 1
+    end
+
+    # Provisioning con uno script
+    config.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "1.8"
+      ansible.playbook = "container-playbook.yml" 
+    end
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "1.8"
+      ansible.playbook = "/Users/giulia/sourcesense-lab/formazionesou_cm/step 2/build-playbook.yml" 
+    end
+  end
+end

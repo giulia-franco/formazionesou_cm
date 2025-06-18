@@ -1,0 +1,13 @@
+- name:  es 3 track 3
+  hosts: all
+  become: yes
+
+  vars:
+    container_runtime: 'docker' #o podman
+    image_name: 'image_push'
+    image_tag: 'latest'
+  roles:
+    - preparazionevm
+    - containers
+    - push
+

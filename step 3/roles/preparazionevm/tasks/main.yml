@@ -1,0 +1,39 @@
+# aggiornamento lista dei pacchetti
+   - name: Aggiornare la lista dei pacchetti
+     package:
+        update_cache: yes     
+
+# controllo che pip sia installato   
+   - name: Assicura che pip sia installato
+     package:  
+        name: python3-pip     # installa pip per python 3
+        state: present        # controllo che pip sia installato
+
+# installa il modulo python 'request'
+   - name: Installa modulo Python 'requests'
+     pip:
+        name: requests        # Install the 'request' module
+
+# aggiungi il repo di Docker
+   - name: Aggiungi repo Docker su Rocky
+     get_url:       
+        url: https://download.docker.com/linux/centos/docker-ce.repo            
+        dest: /etc/yum.repos.d/docker-ce.repo       
+     when: ansible_os_family == "RedHat"          
+
+# installazione di Docker sulla vm 
+   - name: Installa Docker su Rocky
+     dnf:
+        name:
+          - docker-ce        
+          - docker-ce-cli        
+          - containerd.io        
+        state: present 
+     when: ansible_os_family == "RedHat" 
+
+# abilitare Docker all'avvio
+   - name: Abilitare Docker all'avvio
+     systemd:
+        name: docker        
+        enabled: yes        
+        state: started      

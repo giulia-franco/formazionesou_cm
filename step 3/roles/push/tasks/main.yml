@@ -1,0 +1,39 @@
+# copia dockerfile sulla vm 
+
+  - name: copia docker file
+    ansible.builtin.copy:
+      src: "/Users/giulia/sourcesense-lab/formazionesou_cm/step\ 3/roles/Dockerfile"
+      dest: /tmp/build_context/
+      mode: "0755"
+
+# container_runtime = Docker
+  - name: build immagine Docker
+    command: >
+      docker build -t {{image_name}}:{{image_tag}} /tmp/build_context/
+    when: container_runtime == 'docker'
+
+  - name: Docker Tag immagine
+    command: >
+      docker tag {{image_name}}:{{image_tag}} localhost:5000/{{image_name}}:{{image_tag}}
+    when: container_runtime == 'docker'
+
+  - name: Docker push immagine
+    command: >
+      docker push localhost:5000/{{image_name}}:{{image_tag}}
+    when: container_runtime == 'docker'
+
+# container_runtime = Podman
+  - name: Build immagine Podman
+    command: >
+      podman build -t {{image_name}}:{{image_tag}} /tmp/build_context/
+    when: container_runtime == 'podman'
+
+  - name: Docker Tag immagine
+    command: >
+      podman tag localhost:{{image_tag}} localhost:5000/{{image_name}}:{{image_tag}}
+    when: container_runtime == 'podman'
+
+  - name: Docker push immagine
+    command: >
+      podman push localhost:5000/{{image_name}}:{{image_tag}}
+    when: container_runtime == 'podman'

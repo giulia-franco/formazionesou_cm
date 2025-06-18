@@ -1,0 +1,61 @@
+# container Docker-registry
+   - name: Avvia container Docker Registry
+     docker_container:
+        name: Registry-Docker
+        image: registry:2
+        state: started
+        restart_policy: always
+        published_ports:
+          - "5000:5000"
+     when: container_runtime == 'docker'
+
+# container Podman-registry
+   - name: Avvia container Podman Registry
+     containers.podman.podman_container:
+        name: Registry-Podman
+        image: registry:latest
+        state: started
+        restart_policy: always
+        pubblished_ports:
+          - "5000:5000"
+     when: container_runtime == 'podman'
+
+# creazione primo container (Docker)
+   - name: Crea primo container (Docker)
+     community.docker.docker_container:
+        name: Container-Docker
+        image: nginx
+        state: started
+        published_ports:
+        - "4797:22"
+     when: container_runtime == 'docker'
+
+# creazione primo container (Podman)
+   - name: Crea primo container (Podman)
+     containers.podman.podman_container:
+        name: Container-Podman
+        image: nginx
+        state: started
+        published_ports:
+        - "4797:22"
+     when: container_runtime == 'podman'
+
+# creazione secondo container (Docker)
+   - name: Crea secondo container (Docker)
+     community.docker.docker_container:
+        name: Container2-Docker
+        image: nginx
+        state: started
+        published_ports:
+        - "4536:22"
+     when: container_runtime == 'docker'
+
+# creazione secondo container (Podman)
+   - name: Crea secondo container (Podman)
+     containers.podman.podman_container:
+        name: Container2-Podman
+        image: nginx
+        state: started
+        published_ports:
+        - "4536:22"
+     when: container_runtime == 'podman'

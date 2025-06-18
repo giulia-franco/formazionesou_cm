@@ -1,9 +1,14 @@
 # STEP 2
 
-creazione chiavi ssh con ssh-keygen per ogni immagine salvata in un file che viene richiamato all'interno dell'immagine .
+## build di container
 
-build di due immagini 
+### file contenuti
 
-push su docker hub delle due immagini
+- /rocky --> folder che contiene il dockerfile per buildare l'immagine rocky
+- /ubuntu --> folder che contiene il dockerfile per buildare l'immagine ubuntu
+- build-playbook.yml --> playbook crea i due container con le immagini buildate
 
-creazione del playbook che crei i due container e effettui il forword delle porte 
+### descrizione
+
+Utilizzando la vm creata nello step 1, aggiungiamo un secondo playbook (build-playbook.yml).
+Il playbook contiene i task per la creazione dei due container con le immagini precedentemente buildate e pushate su Docker-hub e effettui il forword delle porte.

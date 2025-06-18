@@ -16,4 +16,4 @@
 
 Il vagrant file crea una vm Rocky linux, il provision della vm viene eseguito con ansible tramite un playbook (playbook.yml), in questo primo playbook vengono stabiliti i ruoli.
 Nella cartella /roles sono contenute le sub-folder con i playbook (main.ymnl) che identificano ogni ruolo.
-Il playbook deve contenere ruoli che funzionino sia con Docker che con Podman.x‡
+Il playbook deve contenere ruoli che funzionino sia con Docker che con Podman.
